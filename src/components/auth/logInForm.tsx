@@ -5,11 +5,17 @@ import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function logInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const router = useRouter()
+  const [errors, setErrors] = useState({
+    email: "",
+    password: ""
+  });
 
 
   const [formData, setFormData] = useState({
@@ -18,18 +24,88 @@ export default function logInForm() {
   } as any)
 
 
+
   const handleOnChnage = (e: React.ChangeEvent<HTMLInputElement>) => {
-       const {name, value} = e.target
+    const { name, value } = e.target
     setFormData({ ...formData, [name]: value });
+
   };
 
-  const handleSubmit =async(e: React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault();
-    // console.log(formData,"userdata");
-// api call
-// res data
+  const validateFormData = () => {
+    let isValidData = true;
+    const tempErrors = { ...errors };
 
+
+    // Validate email
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (formData.email.trim() === "") {
+      tempErrors.email = "Email is required";
+      isValidData = false;
+    } else if (!emailRegex?.test(formData.email)) {
+      tempErrors.email = "Please enter a valid email";
+      isValidData = false;
+    } else {
+      tempErrors.email = "";
+    }
+
+
+    //validate password
+    const passwordRegex =
+      /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+
+    if (formData.password.trim() === "") {
+      tempErrors.password = "Password is required";
+      isValidData = false;
+    } else if (!passwordRegex.test(formData.password)) {
+      tempErrors.password =
+        "Password must be at least 8 characters and include uppercase, lowercase, number, and special character";
+      isValidData = false;
+    } else {
+      tempErrors.password = "";
+    }
+
+
+    setErrors(tempErrors);
+    return isValidData;
+  };
+
+
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const loginUrl = 'http://192.168.1.47:3001/users/login'; // Replace with your actual login API endpoint
+
+    try {
+      const response = await fetch(loginUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Specify that the body is JSON
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        // Handle HTTP errors (e.g., 401 Unauthorized, 400 Bad Request)
+        const errorData = await response.json(); // Assuming the API returns JSON for errors
+        throw new Error(errorData.message || 'Login failed');
+      }
+
+      const data = await response.json(); // Parse the JSON response
+
+      console.log('Login successful:', data);
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("role", data.data.role);
+      localStorage.setItem("name", data.data.name);
+      router.push("/dashboard")
+      return data; // Return the response data (e.g., user token, user info)
+
+    } catch (error) {
+      console.log('Error during login:', error);
+      throw error; // Re-throw the error for further handling in your application
+    }
   }
+
+
 
   return (
     <div className="flex  flex-col flex-1 lg:w-1/2 w-full  ">
@@ -61,8 +137,8 @@ export default function logInForm() {
                   <Label>
                     Email <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="info@gmail.com" type="email" name="email" onChange={handleOnChnage}
-                  />
+                  <Input placeholder="info@gmail.com" type="email" name="email" onChange={handleOnChnage} />
+                  {errors.email && <p className="text-error-500">{errors.email}</p>}
                 </div>
                 <div>
                   <Label>
@@ -75,6 +151,7 @@ export default function logInForm() {
                       name="password"
                       onChange={handleOnChnage}
                     />
+                    {errors.password && <p className="text-error-500">{errors.password}</p>}
                     <span
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"

@@ -22,7 +22,7 @@ export default function AdminLayout({
     : "lg:ml-[90px]";
 
   return (
-    <div className="min-h-screen xl:flex">
+    <div className="min-h-screen border-2 xl:flex">
       {/* Sidebar and Backdrop */}
       <AppSidebar />
       <Backdrop />
