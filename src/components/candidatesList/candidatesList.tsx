@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import {
   Table,
@@ -14,6 +14,7 @@ import EditResume from "../UsersModels/resumeEditModel/EditResume";
 
 
 
+// Define the table data using the interface
 const users = [
   {
     id: 1,
@@ -36,43 +37,31 @@ const users = [
     password: "carla789",
     role: "client",
   },
-
+  {
+    id: 4,
+    name: "David Brown",
+    email: "david.brown@example.com",
+    password: "david123",
+    role: "admin",
+  },
+  {
+    id: 5,
+    name: "Ella Martinez",
+    email: "ella.martinez@example.com",
+    password: "ella456",
+    role: "hr",
+  },
+  {
+    id: 6,
+    name: "Frank Thompson",
+    email: "frank.thompson@example.com",
+    password: "frank789",
+    role: "client",
+  },
 ];
 
 
-export default function UsersTable(callApi:any) {
-  const [data , setData]= useState([]);
-
-const fetchData = async () => {
-    const token =localStorage.getItem("token")
-  const fetchUrl = "http://192.168.1.47:3001/users";
-
-  try {
-    const response = await fetch(fetchUrl, {
-      method: 'GET',
-      headers: {
-             'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json' },
-    });
-
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-
-    // You forgot to await the response.json() call
-    const userData = await response.json();
-   setData(userData.data)
-     console.log(userData.data);
-    
-  } catch (error) {
-    console.error('Error fetching users:', error);
-  }
-};
-
-useEffect(()=>{
-  fetchData();
-
-},[callApi])
+export default function UsersTable() {
   
   return (
     <div className="overflow-hidden rounded-xl  border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -86,13 +75,7 @@ useEffect(()=>{
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  User Name
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                >
-                  User Role
+                  Candidate Name
                 </TableCell>
                 <TableCell
                   isHeader
@@ -100,14 +83,30 @@ useEffect(()=>{
                 >
                   email
                 </TableCell>
-               
-               
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  MobilesNo
+                </TableCell>
+                    <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Resume
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Delete
+                </TableCell>
               </TableRow>
             </TableHeader>
 
             {/* Table Body */}
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05] ">
-              {data?.map((user:any) => (
+              {users?.map((user) => (
                 <TableRow key={user.id}> 
                   <TableCell className="px-5 py-4 sm:px-6 text-start ">
                     <div className="flex items-center gap-3">
