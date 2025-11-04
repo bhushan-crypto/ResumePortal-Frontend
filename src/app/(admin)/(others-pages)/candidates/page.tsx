@@ -1,6 +1,5 @@
-import ComponentCard from '@/components/common/ComponentCard';
+
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
-import UsersTable from '@/components/users/UsersTable';
 import EditResume from '@/components/UsersModels/resumeEditModel/EditResume';
 import React from 'react'
 
@@ -12,6 +11,7 @@ import React from 'react'
     email: "alice.johnson@example.com",
     password: "alice123",
     role: "admin",
+    resume:"Download"
   },
   {
     id: 2,
@@ -19,6 +19,7 @@ import React from 'react'
     email: "brian.smith@example.com",
     password: "brian456",
     role: "hr",
+    resume:"Download"
   },
   {
     id: 3,
@@ -26,6 +27,8 @@ import React from 'react'
     email: "carla.williams@example.com",
     password: "carla789",
     role: "client",
+    resume:"Download"
+    
   },
 
 ];
@@ -106,12 +109,14 @@ import React from 'react'
                     </div>
                   
                   </TableCell>
+                    
                   
-                  <TableCell className="px-4 py-3 text-gray-500 flex gap-2 text-theme-sm dark:text-gray-400">
+                     <TableCell className="px-4 py-3 text-gray-500 flex gap-2 text-theme-sm dark:text-gray-400">
+                       <EditResume/>    
                     <button className="px-[1vw] py-[.8vh] rounded-2xl text-xs  bg-red-500 text-white">
                      Delete 
                     </button>
-                       <EditResume/>
+                    
                   </TableCell>
                 </TableRow>
               ))}

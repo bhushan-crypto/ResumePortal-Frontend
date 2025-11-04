@@ -6,9 +6,11 @@ import ResumeModel from "@/components/UsersModels/resumeModel/ResumeModel";
 import { useSidebar } from "@/context/SidebarContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState ,useEffect,useRef} from "react";
 
 const AppHeader: React.FC = () => {
+  const router =useRouter();
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
 
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
@@ -25,7 +27,13 @@ const AppHeader: React.FC = () => {
     setApplicationMenuOpen(!isApplicationMenuOpen);
   };
   const inputRef = useRef<HTMLInputElement>(null);
-
+         
+const handleLogOut =()=>{
+     localStorage.removeItem('token');
+     localStorage.removeItem("email");
+ router.replace("/login");
+}
+   
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "k") {
@@ -93,7 +101,7 @@ const AppHeader: React.FC = () => {
         >
         
             <div className=" flex ">
-               <button className="px-6 backdrop-blur-2xl bg-blue-600 text-white font-semibold py-2 rounded-xl border">Logout</button>
+               <button onClick={handleLogOut} className="px-6 backdrop-blur-2xl bg-blue-600 text-white font-semibold py-2 rounded-xl border">Logout</button>
          </div>
         </div>
       </div>

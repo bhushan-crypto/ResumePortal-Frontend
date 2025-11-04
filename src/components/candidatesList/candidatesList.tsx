@@ -1,6 +1,6 @@
-'use client'
 
-import React from "react";
+'use client';
+
 
 import {
   Table,
@@ -61,7 +61,7 @@ const users = [
 ];
 
 
-export default function UsersTable() {
+export default function CadidatesList() {
   
   return (
     <div className="overflow-hidden rounded-xl  border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -87,7 +87,7 @@ export default function UsersTable() {
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  MobilesNo
+                  Mobiles No
                 </TableCell>
                     <TableCell
                   isHeader

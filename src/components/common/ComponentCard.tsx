@@ -31,7 +31,7 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
   });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  
+
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -87,14 +87,29 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
 
       {/* Modal */}
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
+
         <div className="relative w-full max-w-[700px] rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
           <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">Enter User Information</h4>
           <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">Add User details to make user appear in the list.</p>
 
           <form className="flex flex-col" onSubmit={handleSave}>
+
+
+                    <div className="gap-x-6 gap-y-5 pb-4">
+                <Label>Role</Label>
+                <select name="role" onChange={handleOnChange} value={formData.role} className="w-full py-2 border-2 rounded-md px-3 outline-gray-200">
+                  <option value="HR">HR</option>
+                  <option value="CLIENT">Client</option>
+                </select>
+              </div>
+
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
               <div>
                 <Label>Name</Label>
+                <Input name="name" onChange={handleOnChange} type="text"  />
+              </div>
+               <div>
+                <Label>Last Name</Label>
                 <Input name="name" onChange={handleOnChange} type="text"  />
               </div>
 
@@ -107,15 +122,15 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
                 <Label>Password</Label>
                 <Input name="password" onChange={handleOnChange} type="password" />
               </div>
-
-              <div>
-                <Label>Role</Label>
-                <select name="role" onChange={handleOnChange} value={formData.role} className="w-full py-2 border-2 rounded-md px-3 outline-gray-200">
-                  <option value="ADMIN">Admin</option>
-                  <option value="HR">HR</option>
-                  <option value="CLIENT">Client</option>
-                </select>
+                <div>
+                <Label>Mobile No</Label>
+                <Input name="password" onChange={handleOnChange} type="Number" />
               </div>
+               <div>
+                <Label>Company Name </Label>
+                <Input name="password" onChange={handleOnChange} type="text" />
+              </div>
+             
             </div>
 
             <div className="flex justify-end gap-3 mt-6">
@@ -125,6 +140,7 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
           </form>
         </div>
       </Modal>
+
 
       {/* Body */}
       <div className="p-4 border-t border-gray-100 dark:border-gray-800 sm:p-6">
