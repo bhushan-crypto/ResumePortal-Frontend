@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 
 interface InputProps {
+
+  value?:string;
   type?: "text" | "number" | "email" | "password" | "date" | "time" | string;
   id?: string;
   name?: string;
@@ -19,6 +21,7 @@ interface InputProps {
 }
 
 const Input: FC<InputProps> = ({
+   value,
   type = "text",
   id,
   name,
@@ -56,7 +59,7 @@ const Input: FC<InputProps> = ({
         id={id}
         name={name}
         placeholder={placeholder}
-        defaultValue={defaultValue}
+       value={value}
         onChange={onChange}
         min={min}
         max={max}

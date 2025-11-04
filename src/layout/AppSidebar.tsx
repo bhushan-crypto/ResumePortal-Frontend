@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
-import { TableIcon, UserCircleIcon } from "../icons/index";
+import { ListIcon, TableIcon, UserCircleIcon } from "../icons/index";
 
 type NavItem = {
   name: string;
@@ -22,6 +22,11 @@ const AdminRoute: NavItem[] = [
     icon: <TableIcon />,
     name: "Users",
     path: "/users",
+  },
+   {
+    icon: <ListIcon />,
+    name: "Candidates",
+    path: "/candidates",
   },
 ];
 
