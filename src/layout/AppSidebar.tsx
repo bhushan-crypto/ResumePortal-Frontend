@@ -28,6 +28,11 @@ const AdminRoute: NavItem[] = [
     name: "Candidates",
     path: "/candidates",
   },
+    {
+    icon: <UserCircleIcon />,
+    name: "Create Jobs",
+    path: "/jobcreation",
+  },
 ];
 
 const UserRoute: NavItem[] = [
