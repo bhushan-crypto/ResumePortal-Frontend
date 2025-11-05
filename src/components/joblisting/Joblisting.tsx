@@ -135,7 +135,7 @@ export default function Joblisting() {
         <div className=" relative px-6 bg-gray-50 h-[100vh] overflow-y-hidden border-2 mt-1px">
 
             <div className="flex flex-col gap-4  mt-3 md:flex-row items-center  w-full sticky top-0  bg-gray-50   justify-between sm:pb-5 sm:pt-2  lg:px-8 lg:py-8 ">
-                <h1 className="  sm:text-xl lg:text-3xl font-bold  text-gray-800">Available Jobs</h1>
+                <h1 className="  sm:text-xl lg:text-3xl font-bold  text-gray-800">Created Jobs</h1>
                 <div className="searchbar h-[8vh] w-[80%] lg:w-[34vw] px-6 border  flex items-center justify-between rounded-4xl">
 
                     <input onChange={(e) => setSearchitem(e.target.value)} value={searchitem} type="text" name="search" placeholder="search by job title" className="w-[80%] outline-none py-2" />
@@ -149,10 +149,10 @@ export default function Joblisting() {
   filteredjobs.map((job) => (
     <div
       key={job.id}
-      className="bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition duration-300"
+      className="bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl    transition duration-300"
     >
       {/* Title + Type */}
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between  items-center mb-2">
         <h2 className="text-xl font-semibold text-gray-900">{job.title}</h2>
         <span className="text-sm px-3 py-1 bg-blue-100 text-blue-700 rounded-full">
           {job.type}
@@ -193,8 +193,8 @@ export default function Joblisting() {
       </div>
 
       {/* Apply Button */}
-      <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 transition">
-        Apply Now
+      <button className="mt-4 w-full bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700 transition">
+        Delete Job
       </button>
     </div>
   ))
