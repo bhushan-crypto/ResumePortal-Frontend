@@ -1,15 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHeader,
-    TableRow,
-} from "../ui/table";
 
-import EditResume from "../UsersModels/resumeEditModel/EditResume";
 
 interface Job {
   id: number;

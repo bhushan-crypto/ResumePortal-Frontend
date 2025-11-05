@@ -1,8 +1,6 @@
 'use client'
 
 import Joblisting from "@/components/joblisting/Joblisting";
-import ResumeUploadForm from "@/components/ResumeUploadForm/ResumeUploadForm";
-import UserInfoCard from "@/components/user-profile/UserInfoCard";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

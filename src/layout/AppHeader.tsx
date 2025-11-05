@@ -1,11 +1,5 @@
 "use client";
-import { ThemeToggleButton } from "@/components/common/ThemeToggleButton";
-import NotificationDropdown from "@/components/header/NotificationDropdown";
-import UserDropdown from "@/components/header/UserDropdown";
-import ResumeModel from "@/components/UsersModels/resumeModel/ResumeModel";
 import { useSidebar } from "@/context/SidebarContext";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState ,useEffect,useRef} from "react";
 
@@ -98,7 +92,7 @@ const handleLogOut =()=>{
           className={`${
             isApplicationMenuOpen ? "flex" : "hidden" 
           }  items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
-        >
+         >
         
             <div className=" flex ">
                <button onClick={handleLogOut} className="px-6 backdrop-blur-2xl  bg-blue-600 text-white font-semibold py-2 rounded-xl border">Logout</button>
