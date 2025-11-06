@@ -25,6 +25,8 @@ const AppHeader: React.FC = () => {
 const handleLogOut =()=>{
      localStorage.removeItem('token');
      localStorage.removeItem("email");
+     localStorage.removeItem("role");
+     localStorage.removeItem("name");
  router.replace("/login");
 }
    
