@@ -1,15 +1,17 @@
 'use client'
-
-import Joblisting from "@/components/joblisting/Joblisting";
+import PublicJoblisting from "@/components/joblisting/PublicJoblisting";
 import ResumeUploadForm from "@/components/ResumeUploadForm/ResumeUploadForm";
-import UserInfoCard from "@/components/user-profile/UserInfoCard";
+import { Modal } from "@/components/ui/modal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useModal } from "@/hooks/useModal";
 
 export default function GuestPage() {
-     const routes =useRouter()
+       const { isOpen, openModal, closeModal } = useModal();
 
-    const [choosefile ,setchoosefile] =useState<File | null>(null);
+      const routes =useRouter()
+
+     const [choosefile ,setchoosefile] =useState<File | null>(null);
 
      const handleonChnage =(e:React.ChangeEvent<HTMLInputElement>)=>{
         const file = e.target.files?.[0] || null;
@@ -38,18 +40,28 @@ export default function GuestPage() {
 
                       <button className="w-[20%] border py-2 rounded-4xl text-sm  bg-blue-600   hover:bg-blue-700 text-white font-regular "  > Search</button>
             </div>
-    <button onClick={handleLogin } className="px-4 lg:px-8 py-2 h-[6vh] sm:py-3 rounded-xl bg-blue-600 text-white font-semibold">
-      LogIn
+<div className="flex gap-5">
+     <button onClick={openModal} className="px-4 lg:text-sm sm:text-xs  lg:px-6 py-2 h-[6vh] sm:py-3 hover:scale-98 rounded-xl bg-gray-600  text-white font-semibold">
+      Upload Resume
     </button>
-  </div>
-
-       <Joblisting/>
-
-      {/* Card Container */}
-      <div className=" bg-white rounded-3xl shadow-lg shadow-black/20 w-[90%] sm:w-[80%] md:w-[60%] lg:w-[60%] m-auto p-6 sm:p-10 flex flex-col items-center text-center">
+       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
+    
+            
+   
  
        <ResumeUploadForm/>
-      </div>
+
+    
+            </Modal>
+      <button onClick={handleLogin } className="px-4 lg:text-sm sm:text-xs lg:px-8 py-2 h-[6vh] sm:py-3 hover:scale-98  rounded-xl bg-blue-600 text-white font-semibold">
+      LogIn
+    </button>
+</div>
+  </div>
+
+       <PublicJoblisting/>
+
+      {/* Card Container */}
     </div>
   );
 }
