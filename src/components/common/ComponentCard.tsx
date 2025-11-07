@@ -5,6 +5,9 @@ import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
+import toast, { Toaster } from 'react-hot-toast';
+
+
 
 interface ComponentCardProps {
   title: string;
@@ -50,15 +53,19 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
       });
       const data = await response.json()
       console.log(data,"user create")
+      toast.success('user created .');
       closeModal();
-      succes()
+       succes()
       if (!response.ok) {
         throw new Error("Failed to save user");
+          toast.error(data.message || "Invalid credentials ");
       }
+      
 
     } catch (error) {
       console.error("Error creating user:", error);
     }
+    
   };
 
   return (

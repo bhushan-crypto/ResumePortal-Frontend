@@ -3,111 +3,6 @@
 import { useEffect, useState } from "react";
 
 
-// interface jData {
-//   id: number;
-//   company: string;
-//   title: string;
-//   description: string;
-//   skills: string[];
-//   salary: number;
-//   type: string;
-//   location: {
-//     type: string;
-//     cities: string[];
-//   };
-//   internalSalary?: number; 
-// }
-// Define the job listings data
-// const jobs = [
-//     {
-//         id: 1,
-//         company: "TechNova Solutions",
-//         title: "Frontend Developer",
-//         description:
-//             "We are looking for a skilled Frontend Developer to build responsive web applications using React and modern JavaScript frameworks.",
-//         skills: ["React", "JavaScript", "HTML", "CSS", "Tailwind CSS"],
-//         salary: "₹6,00,000 - ₹9,00,000 per year",
-//         internalSalary: "₹5,50,000 per year",
-//         location: {
-//             type: "Remote",
-//             cities: ["Bangalore", "Pune", "Hyderabad", "Delhi"],
-//         },
-//         type: "Full-time",
-//     },
-//     {
-//         id: 2,
-//         company: "CloudSphere Technologies",
-//         title: "Backend Developer",
-//         description:
-//             "Join our backend team to design and develop scalable APIs using Node.js and Express. Experience with MongoDB is preferred.",
-//         skills: ["Node.js", "Express", "MongoDB", "REST APIs"],
-//         salary: "₹7,00,000 - ₹10,00,000 per year",
-//         internalSalary: "₹6,00,000 per year",
-//         location: {
-//             type: "Remote",
-//             cities: ["Chennai", "Bangalore", "Noida", "Kolkata"],
-//         },
-//         type: "Contract",
-//     },
-//     {
-//         id: 3,
-//         company: "PixelCraft Studio",
-//         title: "UI/UX Designer",
-//         description:
-//             "Looking for a creative UI/UX Designer to design intuitive interfaces and improve user experiences across our platforms.",
-//         skills: ["Figma", "Adobe XD", "Wireframing", "Prototyping"],
-//         salary: "₹4,00,000 - ₹7,00,000 per year",
-//         location: {
-//             type: "Remote",
-//             cities: ["Mumbai", "Delhi", "Ahmedabad", "Pune"],
-//         },
-//         type: "Freelancing",
-//     },
-//     {
-//         id: 4,
-//         company: "PeopleFirst HR",
-//         title: "HR Intern",
-//         description:
-//             "Assist the HR team in recruitment, employee engagement, and administrative tasks. Great opportunity to learn HR fundamentals.",
-//         skills: ["Communication", "Recruitment", "MS Office", "Coordination"],
-//         salary: "₹10,000 - ₹15,000 per month",
-//         location: {
-//             type: "Remote",
-//             cities: ["Pune", "Bangalore", "Chennai"],
-//         },
-//         type: "Internship",
-//     },
-//     {
-//         id: 5,
-//         company: "InnovateX Labs",
-//         title: "Full Stack Developer",
-//         description:
-//             "We are seeking a Full Stack Developer proficient in React and Node.js to work on end-to-end application development.",
-//         skills: ["React", "Node.js", "MongoDB", "Express", "TypeScript"],
-//         salary: "₹8,00,000 - ₹12,00,000 per year",
-//         internalSalary: "₹9,00,000 per year",
-//         location: {
-//             type: "Remote",
-//             cities: ["Hyderabad", "Pune", "Bangalore", "Delhi"],
-//         },
-//         type: "Full-time",
-//     },
-//     {
-//         id: 6,
-//         company: "WriteRight Media",
-//         title: "Content Writer",
-//         description:
-//             "Create engaging content for blogs, social media, and marketing campaigns. Must have excellent writing and research skills.",
-//         skills: ["Content Writing", "SEO", "Research", "Editing"],
-//         salary: "₹3,00,000 - ₹5,00,000 per year",
-//         location: {
-//             type: "Remote",
-//             cities: ["Jaipur", "Indore", "Mumbai", "Kolkata"],
-//         },
-//         type: "Part-time",
-//     },
-// ];
-
 
 export default function Joblisting({ jData }: any) {
   const [searchitem, setSearchitem] = useState<string>('');
@@ -118,7 +13,26 @@ useEffect(() => {
     setFilterdJobs(jData || []);
   }, [jData]);
 
-
+  const handleDelete=async(jobid :Number)=>{
+    if (!confirm("Are you sure you want to delete this job?")) return;
+      const token = localStorage.getItem("token");
+    const idUrl = `http://192.168.1.47:3001/jobs/${jobid}`;
+      try{
+        const res = await  fetch(idUrl , {
+          method:"DELETE",
+          headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        });
+        if(!res.ok){
+          throw new Error("failed to Delete");
+        }
+        setFilterdJobs((prev:any)=>prev.filter((job:any)=>job.id !== jobid));
+      }catch(error){
+  console.error("Error deleting job:", error);
+      }
+  }
   // const handleSearch = () => {
   //   if (searchitem?.trim() === "") {
   //     setFilterdJobs(jData)
@@ -201,7 +115,7 @@ useEffect(() => {
               </div> */}
 
               {/* Apply Button */}
-              <button className="mt-4 w-full bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700 transition">
+              <button onClick={() => handleDelete(job?.id)} className="mt-4 w-full bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700 transition">
                 Delete Job
               </button>
             </div>
