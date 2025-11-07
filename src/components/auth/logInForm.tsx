@@ -7,6 +7,10 @@ import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
+
+const notify = () => toast.success('Login Succesful.');
+const failedLogin =()=>{toast.error("LOgin Failed.")}
 
 export default function logInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -88,10 +92,11 @@ export default function logInForm() {
         // Handle HTTP errors (e.g., 401 Unauthorized, 400 Bad Request)
         const errorData = await response.json(); // Assuming the API returns JSON for errors
         throw new Error(errorData.message || 'Login failed');
+        failedLogin();
       }
 
       const data = await response.json(); // Parse the JSON response
-
+      notify()
       console.log('Login successful:', data);
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("role", data.data.role);
@@ -182,6 +187,7 @@ export default function logInForm() {
                   <Button className="w-full" size="sm">
                     Log in
                   </Button>
+                        <Toaster  />
                 </div>
               </div>
             </form>

@@ -1,122 +1,65 @@
 'use client';
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-interface Job {
+interface joblist {
   id: number;
   title: string; 
-  company: string;
+  client: string;
   description: string;
-  // ...
+  skills: string[];
+  salary: string;
+  internalSalary?: string;
+  location:string;
+    type: string;
+    cities: string[];
 }
+
+
 // Define the job listings data
-const jobs = [
-    {
-        id: 1,
-        company: "TechNova Solutions",
-        title: "Frontend Developer",
-        description:
-            "We are looking for a skilled Frontend Developer to build responsive web applications using React and modern JavaScript frameworks.",
-        skills: ["React", "JavaScript", "HTML", "CSS", "Tailwind CSS"],
-        salary: "₹6,00,000 - ₹9,00,000 per year",
-        internalSalary: "₹5,50,000 per year",
-        location: {
-            type: "Remote",
-            cities: ["Bangalore", "Pune", "Hyderabad", "Delhi"],
-        },
-        type: "Full-time",
-    },
-    {
-        id: 2,
-        company: "CloudSphere Technologies",
-        title: "Backend Developer",
-        description:
-            "Join our backend team to design and develop scalable APIs using Node.js and Express. Experience with MongoDB is preferred.",
-        skills: ["Node.js", "Express", "MongoDB", "REST APIs"],
-        salary: "₹7,00,000 - ₹10,00,000 per year",
-        internalSalary: "₹6,00,000 per year",
-        location: {
-            type: "Remote",
-            cities: ["Chennai", "Bangalore", "Noida", "Kolkata"],
-        },
-        type: "Contract",
-    },
-    {
-        id: 3,
-        company: "PixelCraft Studio",
-        title: "UI/UX Designer",
-        description:
-            "Looking for a creative UI/UX Designer to design intuitive interfaces and improve user experiences across our platforms.",
-        skills: ["Figma", "Adobe XD", "Wireframing", "Prototyping"],
-        salary: "₹4,00,000 - ₹7,00,000 per year",
-        location: {
-            type: "Remote",
-            cities: ["Mumbai", "Delhi", "Ahmedabad", "Pune"],
-        },
-        type: "Freelancing",
-    },
-    {
-        id: 4,
-        company: "PeopleFirst HR",
-        title: "HR Intern",
-        description:
-            "Assist the HR team in recruitment, employee engagement, and administrative tasks. Great opportunity to learn HR fundamentals.",
-        skills: ["Communication", "Recruitment", "MS Office", "Coordination"],
-        salary: "₹10,000 - ₹15,000 per month",
-        location: {
-            type: "Remote",
-            cities: ["Pune", "Bangalore", "Chennai"],
-        },
-        type: "Internship",
-    },
-    {
-        id: 5,
-        company: "InnovateX Labs",
-        title: "Full Stack Developer",
-        description:
-            "We are seeking a Full Stack Developer proficient in React and Node.js to work on end-to-end application development.",
-        skills: ["React", "Node.js", "MongoDB", "Express", "TypeScript"],
-        salary: "₹8,00,000 - ₹12,00,000 per year",
-        internalSalary: "₹9,00,000 per year",
-        location: {
-            type: "Remote",
-            cities: ["Hyderabad", "Pune", "Bangalore", "Delhi"],
-        },
-        type: "Full-time",
-    },
-    {
-        id: 6,
-        company: "WriteRight Media",
-        title: "Content Writer",
-        description:
-            "Create engaging content for blogs, social media, and marketing campaigns. Must have excellent writing and research skills.",
-        skills: ["Content Writing", "SEO", "Research", "Editing"],
-        salary: "₹3,00,000 - ₹5,00,000 per year",
-        location: {
-            type: "Remote",
-            cities: ["Jaipur", "Indore", "Mumbai", "Kolkata"],
-        },
-        type: "Part-time",
-    },
-];
 
 
 export default function PublicJoblisting() {
-
+ const [jobList ,setJobList]=useState<joblist[]>([]);
    const [appliedJobs, setAppliedJobs] =useState<number[]>([])
     const [searchitem, setSearchitem] = useState<string>('');
-     const [filteredjobs ,setFilterdJobs] =useState(jobs);
+   const [filteredjobs , setFilterdJobs] =useState<joblist[]>(jobList);
+  
       
-     const handleSearch =()=>{
+ 
+
+  useEffect(()=>{
+    const JobsData =async()=>{
+      try{
+        const response = await fetch("http://192.168.1.47:3001/jobs",{
+          method:"GET",
+        headers: {"Content-Type": "application/json"}
+        });
+        if(!response.ok) throw new Error("Somethig went wrong while fetch");
+        const JobListData = await response.json();
+        setJobList( JobListData.data)
+        console.log(JobListData.data, " im job list ")
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    }
+    JobsData()
+  },[])
+  // 👇 Add this effect
+useEffect(() => {
+  setFilterdJobs(jobList);
+}, [jobList]);
+
+     const handleSearch =()=>{ 
         if(searchitem?.trim() ===""){
-            setFilterdJobs(jobs)
+            setFilterdJobs(jobList)
         }
         else{
-         const result = filteredjobs.filter((job)=>(
+         const result = jobList.filter((job)=>(
             job.title.toLowerCase().includes(searchitem.toLowerCase()) ||
-          job.company.toLowerCase().includes(searchitem.toLowerCase()) ||
+          job.client.includes(searchitem.toLowerCase()) ||
           job.skills.some((skill) =>
             skill.toLowerCase().includes(searchitem.toLowerCase())
           )
@@ -132,12 +75,11 @@ export default function PublicJoblisting() {
             
      }
 
-
     return (
         <div className=" relative px-6 bg-gray-50 h-[100vh] overflow-y-hidden border-2 mt-1px">
 
             <div className="flex flex-col gap-4  mt-3 md:flex-row items-center  w-full sticky top-0  bg-gray-50   justify-between sm:pb-5 sm:pt-2  lg:px-8 lg:py-8 ">
-                <h1 className="  sm:text-xl lg:text-3xl font-bold  text-gray-800">Created Jobs</h1>
+                <h1 className="  sm:text-xl lg:text-3xl font-bold  text-gray-800">Avalable  Jobs</h1>
                 <div className="searchbar h-[8vh] w-[80%] lg:w-[34vw] px-6 border  flex items-center justify-between rounded-4xl">
 
                     <input onChange={(e) => setSearchitem(e.target.value)} value={searchitem} type="text" name="search" placeholder="search by job title" className="w-[80%] outline-none py-2" />
@@ -146,12 +88,12 @@ export default function PublicJoblisting() {
                 </div> 
             </div>
 
-            <div className="grid pb-10 overflow-y-scroll no-scrollbar  px-5 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[calc(100vh-120px)]">
+            <div className="grid pb-10 overflow-y-scroll no-scrollbar  px-5 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(100vh-120px)]">
               {filteredjobs.length > 0 ? (
   filteredjobs.map((job) => (
     <div
       key={job.id}
-      className="bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl    transition duration-300"
+      className="bg-white shadow-lg  rounded-2xl p-5 hover:shadow-xl    transition duration-300"
     >
       {/* Title + Type */}
       <div className="flex justify-between  items-center mb-2">
@@ -162,7 +104,7 @@ export default function PublicJoblisting() {
       </div>
 
       {/* Company Name */}
-      <p className="text-sm text-gray-500 mb-3">{job.company}</p>
+      <p className="text-sm text-gray-500 mb-3">{job.client}</p>
 
       {/* Description */}
       <p className="text-gray-600 text-sm mb-3">{job.description}</p>
@@ -191,7 +133,7 @@ export default function PublicJoblisting() {
 
       {/* Location */}
       <div className="mt-3 text-sm">
-        <strong>Location:</strong> {job.location.type} ({job.location.cities.join(", ")})
+        <strong>Location:</strong> {job.location}
       </div>
 
       {/* Apply Button */}

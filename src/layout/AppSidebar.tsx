@@ -14,11 +14,6 @@ type NavItem = {
 
 const AdminRoute: NavItem[] = [
   {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-  {
     icon: <TableIcon />,
     name: "Users",
     path: "/users",
