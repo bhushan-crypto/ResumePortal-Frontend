@@ -34,11 +34,11 @@ import React from 'react'
 ];
 
   return (
-    <div className=' h-screen w-full '>
+    <div className=' min-h-[80vh] w-full '>
 
-  <div className="overflow-hidden rounded-xl  border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-      <div className="max-w-full overflow-x-auto ">
-        <div className="min-w-[1102px]">
+  <div className="overflow-hidden  rounded-xl  border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
+      <div className="max-w-full overflow-x-auto   min-h-[80vh] ">
+        <div className="max-w-[1102px] ">
           <Table>
             {/* Table Header */}
             <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
@@ -77,7 +77,7 @@ import React from 'react'
             </TableHeader>
 
             {/* Table Body */}
-            <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05] ">
+            <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
               {users?.map((user) => (
                 <TableRow key={user.id}> 
                   <TableCell className="px-5 py-4 sm:px-6 text-start ">

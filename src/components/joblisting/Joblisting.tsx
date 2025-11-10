@@ -16,7 +16,7 @@ useEffect(() => {
   const handleDelete=async(jobid :Number)=>{
     if (!confirm("Are you sure you want to delete this job?")) return;
       const token = localStorage.getItem("token");
-    const idUrl = `http://192.168.1.47:3001/jobs/${jobid}`;
+    const idUrl = `http://192.168.1.48:3003/jobs/${jobid}`;
       try{
         const res = await  fetch(idUrl , {
           method:"DELETE",
@@ -54,9 +54,9 @@ useEffect(() => {
 
 
   return (
-    <div className=" relative px-6 bg-gray-50 h-[100vh] overflow-y-hidden border-2 mt-1px">
+    <div className=" relative px-6 bg-[#FFFFFF] min-h-[70vh] overflow-y-hidden overflow-y-scroll border-2 rounded-2xl mt-1px">
 
-      <div className="flex flex-col gap-4  mt-3 md:flex-row items-center  w-full sticky top-0  bg-gray-50   justify-between sm:pb-5 sm:pt-2  lg:px-8 lg:py-8 ">
+      <div className="flex flex-col gap-4   mt-3 md:flex-row items-center  w-full sticky top-0    justify-between sm:pb-5 sm:pt-2  lg:px-8 lg:py-8 ">
         <h1 className="  sm:text-xl lg:text-3xl font-bold  text-gray-800"> Jobs</h1>
         {/* <div className="searchbar h-[8vh] w-[80%] lg:w-[34vw] px-6 border  flex items-center justify-between rounded-4xl">
 
@@ -71,7 +71,7 @@ useEffect(() => {
           filteredjobs.map((job: any) => (
             <div
               key={job?.id}
-              className="bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl    transition duration-300"
+              className="bg-[#fafafa] shadow-lg border-2 rounded-2xl p-5 hover:shadow-xl    transition duration-300"
             >
               {/* Title + Type */} 
               <div className="flex justify-between  items-center mb-2">

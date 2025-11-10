@@ -33,7 +33,7 @@ export default function PublicJoblisting() {
   useEffect(()=>{
     const JobsData =async()=>{
       try{
-        const response = await fetch("http://192.168.1.47:3001/jobs",{
+        const response = await fetch("http://192.168.1.48:3003/jobs",{
           method:"GET",
         headers: {"Content-Type": "application/json"}
         });

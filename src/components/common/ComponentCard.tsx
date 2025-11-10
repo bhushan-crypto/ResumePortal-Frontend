@@ -27,22 +27,23 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
   const { isOpen, openModal, closeModal } = useModal();
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "",
+    name:"",
+    email:"",
+    password:"",
+    role:"",
   });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]:value }));
   };
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(formData)
       const token =localStorage.getItem("token")
-    const loginUrl = "http://192.168.1.47:3001/users/create";
+    const loginUrl = "http://192.168.1.48:3003/users/create";
     try {
       const response = await fetch(loginUrl, {
         method: "POST",
@@ -51,17 +52,15 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
           "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      const data = await response.json()
-      console.log(data,"user create")
-      toast.success('user created .');
-      closeModal();
-       succes()
+
       if (!response.ok) {
         throw new Error("Failed to save user");
-          toast.error(data.message || "Invalid credentials ");
       }
-      
-
+        const data = await response.json()
+      console.log(data,"user create")
+      toast.success('user created.');
+      closeModal();
+       succes()
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -104,7 +103,7 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
 
                     <div className="gap-x-6 gap-y-5 pb-4">
                 <Label>Role</Label>
-                <select name="role" onChange={handleOnChange} value={formData.role} className="w-full py-2 border-2 rounded-md px-3 outline-gray-200">
+                <select id="role" name="role" onChange={handleOnChange}  className="w-full py-2 border-2 rounded-md px-3 outline-gray-200">
                   <option value="HR">HR</option>
                   <option value="CLIENT">Client</option>
                 </select>
@@ -115,10 +114,10 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
                 <Label>Name</Label>
                 <Input name="name" onChange={handleOnChange} type="text"  />
               </div>
-               <div>
+               {/* <div>
                 <Label>Last Name</Label>
                 <Input name="name" onChange={handleOnChange} type="text"  />
-              </div>
+              </div> */}
 
               <div>
                 <Label>Email Address</Label>
@@ -129,14 +128,14 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
                 <Label>Password</Label>
                 <Input name="password" onChange={handleOnChange} type="password" />
               </div>
-                <div>
+                {/* <div>
                 <Label>Mobile No</Label>
                 <Input name="password" onChange={handleOnChange} type="Number" />
-              </div>
-               <div>
+              </div> */}
+               {/* <div>
                 <Label>Company Name </Label>
                 <Input name="password" onChange={handleOnChange} type="text" />
-              </div>
+              </div> */}
              
             </div>
 

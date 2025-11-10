@@ -45,7 +45,7 @@ export default function UsersTable(callApi: any) {
 
   const fetchData = async () => {
     const token = localStorage.getItem("token")
-    const fetchUrl = "http://192.168.1.47:3001/users";
+    const fetchUrl = "http://192.168.1.48:3003/users";
 
     try {
       const response = await fetch(fetchUrl, {
@@ -71,7 +71,7 @@ export default function UsersTable(callApi: any) {
     console.log(typeof (userId), "userId")
 
     const token = localStorage.getItem("token");
-    const idUrl = `http://192.168.1.47:3001/users/${userId}`;
+    const idUrl = `http://192.168.1.48:3003/users/${userId}`;
     try {
       const response = await fetch(idUrl, {
         method: "DELETE",
