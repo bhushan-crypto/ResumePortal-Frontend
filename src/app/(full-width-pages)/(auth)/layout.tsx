@@ -16,21 +16,17 @@ export default function AuthLayout({
       <ThemeProvider>
         <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col  dark:bg-gray-900 sm:p-0">
           {children}
-          <div className="lg:w-1/2 w-full h-full bg-brand-950 dark:bg-white/5 lg:grid items-center hidden">
+          <div className="lg:w-1/2 w-full h-full bg-[#090c36] lg:grid items-center hidden">
             <div className="relative items-center justify-center  flex z-1">
+              
               {/* <!-- ===== Common Grid Shape Start ===== --> */}
               <GridShape />
-              <div className="flex flex-col items-center max-w-md">
+              <div className="flex flex-col items-center max-w-2xl">
                 <Link href="/" className="block ">
-                  {/* <Image
-                    width={231}
-                    height={48}
-                    src="./images/logo/auth-logo.svg"
-                    alt="Logo"
-                            />           */}
-                               <h1 className="font-bold text-white text-4xl   w-full py-4 px-4 rounded-2xl">Resume Upload Portal</h1>     </Link>
-                <p className="text-center text-gray-400 dark:text-white/60">
-                  Free and Open-Source Tailwind CSS Admin Dashboard Template
+                               <h1 className="font-bold text-gray-200 text-4xl   w-full py-4 px-4 rounded-2xl">Your Gateway to Great Jobs</h1>     </Link>
+                <p className="text-center w-full  text-gray-200 dark:text-white/60">
+                   <img src="./images/brand/Login-Page_logo.png" className="w-50  m-auto my-10" alt="" />
+              Empowering students to launch their careers and helping companies hire the right talent faster. JobStore where opportunities meet ambition. !
                 </p>
               </div>
             </div>

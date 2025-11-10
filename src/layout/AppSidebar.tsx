@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
-import { ListIcon, TableIcon, UserCircleIcon } from "../icons/index";
+import { ListIcon,TableIcon, TimeIcon, UserCircleIcon } from "../icons/index";
 
 type NavItem = {
   name: string;
@@ -28,29 +28,36 @@ const AdminRoute: NavItem[] = [
     name: "Create Jobs",
     path: "/jobcreation",
   },
+     {
+    icon: <TimeIcon/>,
+    name: "Add Skills",
+    path: "/addskills",
+  },
 ];
 
 const UserRoute: NavItem[] = [
- 
-  {
-    icon: <TableIcon />,
-    name: "Users",
-    path: "/users",
+
+    {
+    icon: <ListIcon />,
+    name: "Candidates",
+    path: "/candidates",
   },
+      {
+    icon: <UserCircleIcon />,
+    name: "Create Jobs",
+    path: "/jobcreation",
+  },
+
 ];
 
 
 const HrRoute: NavItem[] = [
-  {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
+    {
+    icon: <ListIcon />,
+    name: "Candidates",
+    path: "/candidates",
   },
-  {
-    icon: <TableIcon />,
-    name: "Users",
-    path: "/users",
-  },
+
 ];
 
 

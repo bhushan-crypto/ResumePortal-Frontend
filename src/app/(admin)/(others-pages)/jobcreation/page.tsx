@@ -62,7 +62,7 @@ export default function jobscreation() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://192.168.1.47:3001/jobs/create", {
+      const response = await fetch("http://192.168.1.48:3003/jobs/create", {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -99,7 +99,7 @@ export default function jobscreation() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await fetch("http://192.168.1.47:3001/jobs", {
+        const res = await fetch("http://192.168.1.48:3003/jobs", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
