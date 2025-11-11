@@ -23,11 +23,14 @@ const AppHeader: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
          
 const handleLogOut =()=>{
-     localStorage.removeItem('token');
+  let confirmbtn = confirm("Are you sure you want to logout ?");
+    if(confirmbtn){
+        localStorage.removeItem('token');
      localStorage.removeItem("email");
      localStorage.removeItem("role");
      localStorage.removeItem("name");
- router.replace("/login");
+        router.replace("/login");
+    }
 }
    
   useEffect(() => {

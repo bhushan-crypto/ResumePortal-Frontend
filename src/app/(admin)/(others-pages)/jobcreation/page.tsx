@@ -7,8 +7,8 @@ import Select from 'react-select';
 import React, { useEffect, useState } from 'react';
 
 const clients = ["CloudSphere Technologies", "PixelCraft Studio", "PeopleFirst HR"];
-const majorCities = ["MUMBAI", "PUNE", "BANGLORE", "JAIPUR", "NAGPUR", "KOLKATA"];
-const jobTypes = ["FULL_TIME", "INTERNSHIPS", "CONTRACT", "FREELANCER"];
+const majorCities = ["MUMBAI", "DELHI", "BANGLORE", '  HYDERABAD',"CHENNAI", "PUNE",];
+const jobTypes = ["FULL_TIME", "INTERNSHIPS", "CONTRACT", "FREELANCER"]
 const options = [
   { value: 'Js', label: 'Js' },
   { value: 'nodeJs', label: 'nodeJs' },

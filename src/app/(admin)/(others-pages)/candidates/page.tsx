@@ -1,133 +1,141 @@
+"use client";
 
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
-import EditResume from '@/components/UsersModels/resumeEditModel/EditResume';
-import React from 'react'
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import EditResume from "@/components/UsersModels/resumeEditModel/EditResume";
+import React, { useEffect, useState } from "react";
 
- export default function Cadidates () {
-    const users = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    password: "alice123",
-    role: "admin",
-    resume:"Download"
-  },
-  {
-    id: 2,
-    name: "Brian Smith",
-    email: "brian.smith@example.com",
-    password: "brian456",
-    role: "hr",
-    resume:"Download"
-  },
-  {
-    id: 3,
-    name: "Carla Williams",
-    email: "carla.williams@example.com",
-    password: "carla789",
-    role: "client",
-    resume:"Download"
-    
-  },
+interface Candidate {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile?: string;
+  yearsOfExperience: number;
+  education?: string;
+  noticePeriod: number;
+  resume: string;
+  skills: { name: string }[];
+}
 
-];
+export default function Candidates() {
+  const role =localStorage.getItem("role")
+  const [candidatesData, setCandidatesData] = useState<Candidate[]>([]);
+
+   const [filtercandidate,setFiltercandidates]=useState(candidatesData)
+ 
+     useEffect(()=>{
+      setFiltercandidates(candidatesData||[]);
+     },[candidatesData])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("http://192.168.1.48:3003/candidates", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) {
+          throw new Error("Something went wrong while fetching candidates");
+        }
+        const data = await res.json();
+        const candidatesArray = Array.isArray(data.data) ? data.data : data; // handles both cases
+setCandidatesData(candidatesArray || []);
+      } catch (error) {
+        console.error("Error fetching candidates:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleDelete =async(candidatesID : number)=>{
+     if (!confirm("Are you sure you want to delete this job?")) return;
+ const url =`http://192.168.1.48:3003/candidates/${candidatesID}`
+  try{
+       const res =await fetch(url , {
+        method:"DELETE",
+        headers:{'Content-Type': 'application/json'}
+       });
+       if(!res.ok)throw new Error("FAILD TO DELETE");
+        setFiltercandidates((prev:any)=>prev.filter((cand:any)=> cand.id !==candidatesID ))
+  }catch(error){
+    console.error("Error deleting job:", error);
+  }
+  }
 
   return (
-    <div className=' min-h-[80vh] w-full '>
-
-  <div className="overflow-hidden  rounded-xl  border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-      <div className="max-w-full overflow-x-auto   min-h-[80vh] ">
-        <div className="max-w-[1102px] ">
-          <Table>
-            {/* Table Header */}
-            <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
-              <TableRow>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                >
-                  User Name
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                >
-                  User Role
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                >
-                  email
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                >
-                  Password
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                >
-                  Delete
-                </TableCell>
-              </TableRow>
-            </TableHeader>
-
-            {/* Table Body */}
-            <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-              {users?.map((user) => (
-                <TableRow key={user.id}> 
-                  <TableCell className="px-5 py-4 sm:px-6 text-start ">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 overflow-hidden flex items-center justify-center bg-blue-700 text-white rounded-full ">
-                      {user.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                          {user.name}
-                        </span>
-                        <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                          {user.role}
-                        </span>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                     {user.role} 
-                  </TableCell>
-                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                    <div className="flex -space-x-2">
-                       {user.email}
-                    </div>
-                  </TableCell>
-                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                  <div className="flex -space-x-2">
-                    {user.password}
-                    </div>
-                  
-                  </TableCell>
-                    
-                  
-                     <TableCell className="px-4 py-3 text-gray-500 flex gap-2 text-theme-sm dark:text-gray-400">
-                       <EditResume/>    
-                    <button className="px-[1vw] py-[.8vh] rounded-2xl text-xs  bg-red-500 text-white">
-                     Delete 
-                    </button>
-                    
-                  </TableCell>
+    <div className="min-h-[80vh] w-full">
+      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
+        <div className="max-w-full overflow-x-auto">
+          <div className="min-w-[1102px]">
+            <Table>
+              {/* Header */}
+              <TableHeader className="border-b border-gray-200   ">
+                <TableRow className="">
+                  <TableCell isHeader>Candidate Name</TableCell>
+                  <TableCell isHeader>Email</TableCell>
+                  <TableCell isHeader>Mobile No</TableCell>
+                  <TableCell isHeader>Years of Experience</TableCell>
+                  <TableCell isHeader>Education</TableCell>
+                  <TableCell isHeader>Skills</TableCell>
+                  <TableCell isHeader>Resume</TableCell>
+                  {role =="CLIENT"? "" :(<TableCell isHeader>Delete</TableCell>)}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+
+              {/* Body */}
+              <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
+                {filtercandidate.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="px-5 py-4 sm:px-6 text-start">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full">
+                          {user.firstName.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <span className="block font-sm text-gray-800 dark:text-white/90">
+                            {user.firstName} {user.lastName}
+                          </span>
+                        </div>
+                      </div> 
+                    </TableCell>
+
+                    <TableCell   className=" font-sm text-gray-800 dark:text-white/90 text-center text-sm">{user.email}</TableCell>
+                    <TableCell   className=" font-sm text-gray-800 dark:text-white/90 text-center text-sm">{user.mobile}</TableCell>
+                    <TableCell   className=" font-sm text-gray-800 dark:text-white/90 text-center text-sm">{user.yearsOfExperience}</TableCell>
+                    <TableCell   className=" font-sm text-gray-800 dark:text-white/90 text-center text-sm ">{user.education || "-"}</TableCell>
+
+                    <TableCell className=" w-[16%]">
+                      <div className="flex flex-wrap w-full  justify-center  m-auto gap-2">
+                        {user.skills.length > 0 ? (
+                          user.skills.map((s, i) => (
+                            <span key={i} className="bg-gray-100 px-2 py-1 rounded-md text-xs">
+                              {s.name}
+                            </span>
+                          ))
+                        ) : (
+                          <span>-</span>
+                        )}
+                      </div>
+                    </TableCell>
+
+                    <TableCell className=" flex border-2  " >
+                      <EditResume resume={user.resume} />
+                    </TableCell>
+
+                    <TableCell >
+                      {role == "CLIENT" ?"":( <button onClick={()=>handleDelete(user?.id)} className="px-3 py-1 rounded-2xl text-xs bg-red-500 text-white">
+                        Delete
+                      </button>) }
+                     
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </div>
     </div>
-
-
-    </div>
-  )
+  );
 }
-

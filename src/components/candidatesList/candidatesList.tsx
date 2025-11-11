@@ -62,6 +62,11 @@ const users = [
 
 
 export default function CadidatesList() {
+
+  const Candidate =async()=>{
+    
+  const data= await fetch("")
+  }
   
   return (
     <div className="overflow-hidden rounded-xl  border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -89,6 +94,26 @@ export default function CadidatesList() {
                 >
                   Mobiles No
                 </TableCell>
+
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  year Of experience
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                 Education
+                </TableCell>
+                  <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                skills
+                </TableCell>
+                
                     <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
@@ -115,7 +140,7 @@ export default function CadidatesList() {
                       </div>
                       <div>
                         <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                          {user.name}
+                          {user.name} 
                         </span>
                         <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
                           {user.role}

@@ -39,16 +39,24 @@ export default function ResumeUploadForm() {
 
   const handlSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData, "im form data")
+    
     const token = localStorage.getItem("token");
 
     const bodyData = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== null) bodyData.append(key, value as any);
-    });
-
+   Object.entries(formData).forEach(([key, value]) => {
+  if (value !== null) {
+    // If the field is "resume", backend expects it as "file"
+    if (key === "resume") {
+      bodyData.append("file", value );
+    } else {
+      bodyData.append(key, value as any);
+    }
+  }
+});
+    
+     console.log("bodyData",bodyData)
     try {
-      const response = await fetch("http://localhost:3003/candidates/create", {
+      const response = await fetch("http://192.168.1.48:3003/candidates/uploadMedia", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token || ""}`,
